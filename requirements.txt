@@ -5,7 +5,7 @@ python-dotenv==0.19.0
 requests==2.26.0
 python-multipart==0.0.5
 langchain==0.0.352
-langchain-groq==0.0.3
+langchain-groq
 dnspython==2.4.0
 certifi==2023.7.22
 streamlit==1.22.0 
