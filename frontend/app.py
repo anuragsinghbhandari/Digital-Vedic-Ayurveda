@@ -82,7 +82,7 @@ def dosha_analysis():
                     
                     # Call API
                     response = requests.post(
-                        "http://localhost:8000/api/v1/analyze-dosha",
+                        "https://dva-x7pg.onrender.com/api/v1/analyze-dosha",
                         json=user_responses,
                         timeout=30
                     )
@@ -301,7 +301,7 @@ def personal_consultation():
                     
                     # Call API for personalized recommendations
                     response = requests.post(
-                        "http://localhost:8000/api/v1/personal-consultation",
+                        "https://dva-x7pg.onrender.com/api/v1/personal-consultation",
                         json=consultation_data,
                         timeout=30
                     )
