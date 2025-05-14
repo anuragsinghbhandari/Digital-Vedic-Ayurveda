@@ -23,9 +23,9 @@ class DoshaAnalyzer:
         
         for trait, response in user_responses.items():
             weight = self.characteristic_weights.get(trait, 1.0)
-            scores["vata"] += response.vata_score * weight
-            scores["pitta"] += response.pitta_score * weight
-            scores["kapha"] += response.kapha_score * weight
+            scores["vata"] += response['vata_score'] * weight
+            scores["pitta"] += response['pitta_score'] * weight
+            scores["kapha"] += response['kapha_score'] * weight
         
         # Normalize scores to percentages
         total_score = sum(scores.values())

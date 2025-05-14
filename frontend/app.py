@@ -2,7 +2,8 @@ import streamlit as st
 from typing import Dict
 import requests
 import logging
-
+from backend.app.api.routes import analyze_dosha
+from backend.app.api.routes import get_personal_consultation
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 
@@ -79,20 +80,17 @@ def dosha_analysis():
                             **map_response_to_dosha_scores(stress_response)
                         }
                     }
-                    
-                    # Call API
-                    response = requests.post(
-                        "https://dva-x7pg.onrender.com/analyze-dosha",
-                        json=user_responses,
-                        timeout=30
-                    )
-                    
-                    if response.status_code == 200:
-                        results = response.json()
-                        st.session_state.dosha_profile = results
+                    # # Call API
+                    # response = requests.post(
+                    #     "https://dva-x7pg.onrender.com/analyze-dosha",
+                    #     json=user_responses,
+                    #     timeout=30
+                    # )
+                    results = analyze_dosha(user_responses)
+                    if results:
                         display_dosha_results(results)
                     else:
-                        st.error(f"Error: {response.text}")
+                        st.error(f"Unable to analyze dosha")
                 except requests.exceptions.RequestException as e:
                     st.error(f"Failed to connect to the server: {str(e)}")
                 except Exception as e:
@@ -294,22 +292,15 @@ def personal_consultation():
                             "previous_treatments": previous_treatments
                         }
                     }
-                    
                     # Get dosha profile from session state if available
                     if 'dosha_profile' in st.session_state:
                         consultation_data["dosha_profile"] = st.session_state.dosha_profile
                     
-                    # Call API for personalized recommendations
-                    response = requests.post(
-                        "https://dva-x7pg.onrender.com/personal-consultation",
-                        json=consultation_data,
-                        timeout=30
-                    )
-                    
-                    if response.status_code == 200:
-                        st.session_state.consultation_results = response.json()
+                    cons_result = get_personal_consultation(consultation_data)
+                    if cons_result:
+                        st.session_state.consultation_results = cons_result
                     else:
-                        st.error(f"Error: {response.text}")
+                        st.error(f"Unable to get personal recommendations")
                         
                 except requests.exceptions.RequestException as e:
                     st.error(f"Failed to connect to the server: {str(e)}")

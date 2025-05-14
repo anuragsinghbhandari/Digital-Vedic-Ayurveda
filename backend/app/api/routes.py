@@ -1,4 +1,3 @@
-from fastapi import APIRouter, HTTPException
 from typing import Dict
 from ..models.dosha import DoshaProfile, DoshaCharacteristic
 from ..models.consultation import ConsultationRequest
@@ -6,13 +5,13 @@ from ..services.dosha_analyzer import DoshaAnalyzer
 from ..services.recommendation_engine import RecommendationEngine
 from ..services.consultation_service import ConsultationService
 
-router = APIRouter()
+
 dosha_analyzer = DoshaAnalyzer()
 recommendation_engine = RecommendationEngine()
 consultation_service = ConsultationService()
 
-@router.post("/analyze-dosha")
-async def analyze_dosha(user_responses: Dict[str, DoshaCharacteristic]):
+
+def analyze_dosha(user_responses: Dict[str, DoshaCharacteristic]):
     try:
         # Get dosha analysis
         dosha_results = dosha_analyzer.analyze_dosha(user_responses)
@@ -28,10 +27,9 @@ async def analyze_dosha(user_responses: Dict[str, DoshaCharacteristic]):
         
         return response
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        raise e
 
-@router.get("/recommendations/{dosha_type}")
-async def get_recommendations(dosha_type: str):
+def get_recommendations(dosha_type: str):
     try:
         # Create a mock dosha profile for the specific dosha type
         dosha_profile = {
@@ -45,14 +43,14 @@ async def get_recommendations(dosha_type: str):
         recommendations = recommendation_engine.get_recommendations(dosha_profile)
         return recommendations
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        raise e
 
-@router.post("/personal-consultation")
-async def get_personal_consultation(consultation_data: ConsultationRequest):
+
+def get_personal_consultation(consultation_data: ConsultationRequest):
     try:
         recommendations = consultation_service.get_personalized_recommendations(
-            consultation_data.dict()
+            consultation_data
         )
         return recommendations
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e)) 
+        raise e 
