@@ -2,8 +2,8 @@ import streamlit as st
 from typing import Dict
 import requests
 import logging
-from backend.app.api.routes import analyze_dosha
-from backend.app.api.routes import get_personal_consultation
+from ..backend.app.api.routes import analyze_dosha
+from ..backend.app.api.routes import get_personal_consultation
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 
