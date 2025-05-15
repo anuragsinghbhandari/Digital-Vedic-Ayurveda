@@ -32,7 +32,7 @@ class RecommendationEngine:
             
             # Updated model name and message format
             data = {
-                "model": "llama-3.1-70b-versatile",  # Corrected model name
+                "model": "llama-3.3-70b-versatile",  # Corrected model name
                 "messages": [
                     {
                         "role": "user",
