@@ -87,6 +87,7 @@ def dosha_analysis():
                     #     timeout=30
                     # )
                     results = analyze_dosha(user_responses)
+                    st.session_state.dosha_profile = results
                     if results:
                         display_dosha_results(results)
                     else:
